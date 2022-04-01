@@ -27,7 +27,7 @@ root_type=`echo $root_info | awk '{print $2}'`
 
 dr=`echo $root_info | awk '{print $4}'`
 db=`df -P | grep /dev/mmcblk0p1 | awk '{print $2}'`
-ds=`echo $dr $db |awk '{print int(($1+$2)*1.2)}'`
+ds=`echo $dr $db |awk '{print int(($1+$2)*1.4)}'`
 
 echo "create $file ..."
 
@@ -109,7 +109,6 @@ cd /mnt
 
 rsync --force -rltWDEgop --delete --stats --progress \
     $EXCLUDE_SWAPFILE \
-    --exclude ".gvfs" \
     --exclude "$boot_mnt" \
     --exclude "/dev" \
     --exclude "/media" \
@@ -119,6 +118,13 @@ rsync --force -rltWDEgop --delete --stats --progress \
     --exclude "/snap" \
     --exclude "/sys" \
     --exclude "/tmp" \
+    --exclude=/var/log \
+    --exclude=/var/tmp \
+    --exclude=/var/cache/apt/archives \
+    --exclude=/usr/src/linux-headers* \
+    --exclude=/home/*/.gvfs \
+    --exclude=/home/*/.cache \
+    --exclude=/home/*/.local/share/Trash \
     --exclude "lost\+found" \
     --exclude "$file" \
     / ./
@@ -153,5 +159,4 @@ umount /mnt
 
 kpartx -d $loopdevice
 losetup -d $loopdevice
-
 
