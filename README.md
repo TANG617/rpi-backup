@@ -1,4 +1,5 @@
-# rpi-backup
+# RPi-BackUp
+我根据原作者项目Issue做了一小部分更新，Debug原来无法完成备份的问题（NoSpace Space）
 
 树莓派系统备份脚本 
 
